@@ -49,3 +49,10 @@ export const Spacer = styled.div`
   width: 100%;
   margin: ${props => props.margin || '20px'};
 `
+
+export const Typography = styled.p`
+  font-weight: ${props => props.fontWeight || '700'};
+  font-size: ${props => props.size || '18px'};
+  line-height: ${props => props.lineHeight || '27px'};
+  color: ${props => (props.primary ? '#1a1a1a' : '#ececec')};
+`
