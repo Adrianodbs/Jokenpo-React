@@ -56,3 +56,12 @@ export const Typography = styled.p`
   line-height: ${props => props.lineHeight || '27px'};
   color: ${props => (props.primary ? '#1a1a1a' : '#ececec')};
 `
+
+export const Rules = styled.button`
+  width: 100%;
+  background: transparent;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ececec;
+`
