@@ -1,8 +1,17 @@
 import ActionsGame from './components/actions-game'
 import Button from './components/button'
 import Input from './components/input'
+import Modal from './components/modal'
 import Score from './components/score'
 import * as C from './styles'
+
+const messages = {
+  rules: {
+    title: 'Regras',
+    message:
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. '
+  }
+}
 
 function App() {
   const actions = [
@@ -50,6 +59,7 @@ function App() {
           <C.Rules>Regras</C.Rules>
         </C.Flex>
         <ActionsGame actions={actions} onClick={value => handleClick(value)} />
+        <Modal />
       </C.Flex>
     </C.Container>
   )
