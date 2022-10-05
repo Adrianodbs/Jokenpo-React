@@ -6,8 +6,8 @@ export const ModalStyled = styled.div`
   border-radius: 12px;
   padding: 16px;
   position: absolute;
-  top: 2;
-  transition: 0.5;
+  transition: 0.5s ease;
+  top: ${props => (props.open ? '5%' : '-100%')};
   z-index: 2;
 `
 

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import ActionsGame from './components/actions-game'
 import Button from './components/button'
 import Input from './components/input'
@@ -14,6 +15,9 @@ const messages = {
 }
 
 function App() {
+  const [titleModal, setTitleModal] = useState(messages.rules.title)
+  const [messageModal, setMessageModal] = useState(messages.rules.message)
+  const [open, setOpen] = useState(false)
   const actions = [
     {
       value: 1,
@@ -56,10 +60,15 @@ function App() {
 
         <C.Flex direction="column" gap="0px">
           <C.Typography>Iniciar jogo!</C.Typography>
-          <C.Rules>Regras</C.Rules>
+          <C.Rules onClick={() => setOpen(true)}>Regras</C.Rules>
         </C.Flex>
         <ActionsGame actions={actions} onClick={value => handleClick(value)} />
-        <Modal />
+        <Modal
+          open={open}
+          titleModal={titleModal}
+          messageModal={messageModal}
+          handleOpenModal={() => setOpen(false)}
+        />
       </C.Flex>
     </C.Container>
   )
