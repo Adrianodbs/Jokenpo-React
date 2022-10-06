@@ -40,6 +40,13 @@ function App() {
   const [titleModal, setTitleModal] = useState('')
   const [messageModal, setMessageModal] = useState('')
   const [open, setOpen] = useState(false)
+  const [textGame, setTextGame] = useState('Iniciar jogo!')
+
+  const [scorePlayerValue, setScorePlayerValue] = useState(0)
+  const [scoreComputerValue, setScoreComputerValue] = useState(0)
+  const [userAction, setUserAction] = useState('❓')
+  const [computerAction, setComputerAction] = useState('❓')
+
   const [userName, setUserName] = useState('JOGADOR')
   const [playGame, setPlayGame] = useState(false)
 
@@ -55,8 +62,14 @@ function App() {
     setMessageModal(messages?.[type]?.message)
   }
 
+  const randomActionComputer = () => {
+    const number = Math.floor(Math.random() * actions.length)
+    return actions[number].label
+  }
+
   const handleClick = value => {
-    console.log(value)
+    setUserAction(value.label)
+    setComputerAction(randomActionComputer())
   }
 
   const handleUserName = value => {
@@ -83,16 +96,20 @@ function App() {
           onChange={value => handleUserName(value)}
         />
         <Button onClick={startGame}>{playGame ? 'Parar' : 'Iniciar'}</Button>
-        <Score userName={userName} scorePlayer="0" scoreComputer="0" />
+        <Score
+          userName={userName}
+          scorePlayer={scorePlayerValue}
+          scoreComputer={scoreComputerValue}
+        />
         <C.Spacer margin="10px" />
 
         <C.Flex justify="space-around">
-          <C.Typography size="32px">❓</C.Typography>
-          <C.Typography size="32px">❓</C.Typography>
+          <C.Typography size="32px">{userAction}</C.Typography>
+          <C.Typography size="32px">{computerAction}</C.Typography>
         </C.Flex>
 
         <C.Flex direction="column" gap="0px">
-          <C.Typography>Iniciar jogo!</C.Typography>
+          <C.Typography>{textGame}</C.Typography>
           <C.Rules onClick={() => handleOpenModal('rules')}>Regras</C.Rules>
         </C.Flex>
         <ActionsGame
