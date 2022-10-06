@@ -9,7 +9,7 @@ function Modal({
       <Flex direction='column'>
         <Typography primary>{titleModal}</Typography>
         <Spacer margin='8px' />
-        <CLoseModal onClick={()=> handleOpenModal(null)}>X</CLoseModal>
+        <CLoseModal onClick={()=> handleOpenModal()}>X</CLoseModal>
         <Typography primary>{messageModal}</Typography>
       </Flex>
     </ModalStyled>

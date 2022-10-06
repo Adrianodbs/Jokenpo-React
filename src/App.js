@@ -11,6 +11,10 @@ const messages = {
     title: 'Regras',
     message:
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. '
+  },
+  user: {
+    title: 'Usuário',
+    message: 'Preencha um nome para o jogador'
   }
 }
 
@@ -33,10 +37,23 @@ const actions = [
 ]
 
 function App() {
-  const [titleModal, setTitleModal] = useState(messages.rules.title)
-  const [messageModal, setMessageModal] = useState(messages.rules.message)
+  const [titleModal, setTitleModal] = useState('')
+  const [messageModal, setMessageModal] = useState('')
   const [open, setOpen] = useState(false)
   const [userName, setUserName] = useState('JOGADOR')
+  const [playGame, setPlayGame] = useState(false)
+
+  const handleOpenModal = type => {
+    if (!type) {
+      setOpen(false)
+      setTitleModal('')
+      setMessageModal('')
+      return
+    }
+    setOpen(true)
+    setTitleModal(messages?.[type]?.title)
+    setMessageModal(messages?.[type]?.message)
+  }
 
   const handleClick = value => {
     console.log(value)
@@ -46,6 +63,15 @@ function App() {
     if (!value) return setUserName('JOGADOR')
     setUserName(value)
   }
+
+  const startGame = () => {
+    if (userName === 'JOGADOR') {
+      handleOpenModal('user')
+      return
+    }
+    setPlayGame(true)
+  }
+
   return (
     <C.Container>
       <C.Flex direction="column">
@@ -56,7 +82,7 @@ function App() {
           placeholder="Digite o nome do jogador"
           onChange={value => handleUserName(value)}
         />
-        <Button onClick={() => console.log('cliquei')}>Iniciar</Button>
+        <Button onClick={startGame}>{playGame ? 'Parar' : 'Iniciar'}</Button>
         <Score userName={userName} scorePlayer="0" scoreComputer="0" />
         <C.Spacer margin="10px" />
 
@@ -67,14 +93,18 @@ function App() {
 
         <C.Flex direction="column" gap="0px">
           <C.Typography>Iniciar jogo!</C.Typography>
-          <C.Rules onClick={() => setOpen(true)}>Regras</C.Rules>
+          <C.Rules onClick={() => handleOpenModal('rules')}>Regras</C.Rules>
         </C.Flex>
-        <ActionsGame actions={actions} onClick={value => handleClick(value)} />
+        <ActionsGame
+          actions={actions}
+          onClick={value => handleClick(value)}
+          disabled={!playGame}
+        />
         <Modal
           open={open}
           titleModal={titleModal}
           messageModal={messageModal}
-          handleOpenModal={() => setOpen(false)}
+          handleOpenModal={() => handleOpenModal(null)}
         />
       </C.Flex>
     </C.Container>
