@@ -14,30 +14,37 @@ const messages = {
   }
 }
 
+const actions = [
+  {
+    value: 1,
+    label: '👊',
+    description: 'Rock'
+  },
+  {
+    value: 2,
+    label: '🖐️',
+    description: 'Paper'
+  },
+  {
+    value: 3,
+    label: '✌️',
+    description: 'Scissors'
+  }
+]
+
 function App() {
   const [titleModal, setTitleModal] = useState(messages.rules.title)
   const [messageModal, setMessageModal] = useState(messages.rules.message)
   const [open, setOpen] = useState(false)
-  const actions = [
-    {
-      value: 1,
-      label: '👊',
-      description: 'Rock'
-    },
-    {
-      value: 2,
-      label: '🖐️',
-      description: 'Paper'
-    },
-    {
-      value: 3,
-      label: '✌️',
-      description: 'Scissors'
-    }
-  ]
+  const [userName, setUserName] = useState('JOGADOR')
 
   const handleClick = value => {
     console.log(value)
+  }
+
+  const handleUserName = value => {
+    if (!value) return setUserName('JOGADOR')
+    setUserName(value)
   }
   return (
     <C.Container>
@@ -47,10 +54,10 @@ function App() {
         </C.Typography>
         <Input
           placeholder="Digite o nome do jogador"
-          onChange={value => console.log(value)}
+          onChange={value => handleUserName(value)}
         />
         <Button onClick={() => console.log('cliquei')}>Iniciar</Button>
-        <Score userName="Jogador" scorePlayer="0" scoreComputer="0" />
+        <Score userName={userName} scorePlayer="0" scoreComputer="0" />
         <C.Spacer margin="10px" />
 
         <C.Flex justify="space-around">

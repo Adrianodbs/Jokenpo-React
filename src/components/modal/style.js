@@ -8,6 +8,7 @@ export const ModalStyled = styled.div`
   position: absolute;
   transition: 0.5s ease;
   top: ${props => (props.open ? '5%' : '-100%')};
+  opacity: ${props => (props.open ? '1' : '0')};
   z-index: 2;
 `
 
