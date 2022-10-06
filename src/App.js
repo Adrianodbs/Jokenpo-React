@@ -18,6 +18,12 @@ const messages = {
   }
 }
 
+const valueTypeEnum = {
+  ROCK: 1,
+  PAPER: 2,
+  SCISSORS: 3
+}
+
 const actions = [
   {
     value: 1,
@@ -64,12 +70,39 @@ function App() {
 
   const randomActionComputer = () => {
     const number = Math.floor(Math.random() * actions.length)
-    return actions[number].label
+    return actions[number]
   }
 
   const handleClick = value => {
     setUserAction(value.label)
-    setComputerAction(randomActionComputer())
+    const actionComputer = randomActionComputer()
+    setComputerAction(actionComputer.label)
+
+    checkWinner(value.value, actionComputer.value)
+  }
+
+  const checkWinner = (playerValue, computerValue) => {
+    const playerRockWin =
+      playerValue === valueTypeEnum.ROCK &&
+      computerValue === valueTypeEnum.SCISSORS
+    const playerPaperWin =
+      playerValue === valueTypeEnum.PAPER &&
+      computerValue === valueTypeEnum.ROCK
+    const playerScissorsWin =
+      playerValue === valueTypeEnum.SCISSORS &&
+      computerValue === valueTypeEnum.PAPER
+
+    const drawerResult = playerValue === computerValue
+
+    const playerWin = playerRockWin || playerPaperWin || playerScissorsWin
+
+    if (drawerResult) return setTextGame('Empate! Jogue novamente.')
+    if (playerWin) {
+      setScorePlayerValue(state => state + 1)
+      return setTextGame('Vitória! Jogue novamente')
+    }
+    setScoreComputerValue(state => state + 1)
+    return setTextGame('Derrota! Jogue novamente')
   }
 
   const handleUserName = value => {
