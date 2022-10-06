@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ActionsGame from './components/actions-game'
 import Button from './components/button'
 import Input from './components/input'
@@ -15,6 +15,14 @@ const messages = {
   user: {
     title: 'Usuário',
     message: 'Preencha um nome para o jogador'
+  },
+  computerWin: {
+    title: 'Que pena',
+    message: 'Não foi dessa vez, mas tente novamente'
+  },
+  playerWin: {
+    title: 'Parabéns!',
+    message: 'Você venceu'
   }
 }
 
@@ -55,6 +63,8 @@ function App() {
 
   const [userName, setUserName] = useState('JOGADOR')
   const [playGame, setPlayGame] = useState(false)
+
+  const scoreToWin = 10
 
   const handleOpenModal = type => {
     if (!type) {
@@ -115,8 +125,35 @@ function App() {
       handleOpenModal('user')
       return
     }
+    if (playGame) return resetValues()
     setPlayGame(true)
   }
+
+  const resetValues = () => {
+    setTextGame('Iniciar o jogo !')
+    setPlayGame(false)
+    setScorePlayerValue(0)
+    setScoreComputerValue(0)
+    setUserAction('❓')
+    setComputerAction('❓')
+  }
+
+  useEffect(() => {
+    const checkVictory = () => {
+      const playerWin = scorePlayerValue == scoreToWin
+      const computerWin = scoreComputerValue == scoreToWin
+      if (playerWin) {
+        handleOpenModal('playerWin')
+        resetValues()
+      }
+      if (computerWin) {
+        handleOpenModal('computerWin')
+        resetValues()
+      }
+    }
+
+    checkVictory()
+  }, [scoreComputerValue, scorePlayerValue])
 
   return (
     <C.Container>

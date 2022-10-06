@@ -10,6 +10,7 @@ export const ModalStyled = styled.div`
   top: ${props => (props.open ? '5%' : '-100%')};
   opacity: ${props => (props.open ? '1' : '0')};
   z-index: 2;
+  text-align: center;
 `
 
 export const CLoseModal = styled.button`
